@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit>
+    <php>
+        <var name="DB_DSN" value="mysql:dbname=tutorial;host=localhost" />
+        <var name="DB_USER" value="dbunit" />
+        <var name="DB_PASSWORD" value="" />
+        <var name="DB_DBNAME" value="tutorial" />
+        <var name="YAML_FILE" value="tutorial.yaml" />
+    </php>
+</phpunit>

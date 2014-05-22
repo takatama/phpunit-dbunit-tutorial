@@ -1,0 +1,11 @@
+account:
+  -
+    id: 1
+    name: "helloworld"
+
+bookmark:
+  -
+    id: 1
+    account_id: 1
+    url: "http://biglobe.ne.jp/"
+    created: 2014-05-22 18:14:00
