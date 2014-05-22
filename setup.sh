@@ -1,9 +1,11 @@
-yum -y install php php-mbstring php-pear php-xml php-pdo mysql-server php-mysql
+#install mysql
+yum -y install mysql-server
 /sbin/chkconfig --level 2345 mysqld on
 /etc/rc.d/init.d/mysqld start
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
-/usr/local/bin/composer --global install
+mysql -u root < tutorial.sql
+
+#install php
+yum -y install php php-mbstring php-pear php-xml php-pdo php-mysql
 if [ ! -f /etc/php.ini.org ]; then
   sudo cp /etc/php.ini /etc/php.ini.org
 fi
@@ -17,3 +19,7 @@ expose_php = Off
 date.timezone = Asia/Tokyo
 EOF
 
+#install composer
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+/usr/local/bin/composer install
