@@ -17,15 +17,15 @@ class AccountTest extends YamlTestCase
         $this->assertEquals(1, $this->getConnection()->getRowCount('bookmark'));
     }
 
-    private function getFixtureRow($index)
+    private function getFixtureRow($table, $index)
     {
-        $accountFixture = $this->getConnection()->createDataSet()->getTable('account');
-        return $accountFixture->getRow($index);
+        $fixtureTable = $this->getConnection()->createDataSet()->getTable($table);
+        return $fixtureTable->getRow($index);
     }
 
     public function testFind()
     {
-        $row = $this->getFixtureRow(0);
+        $row = $this->getFixtureRow('account', 0);
         $id = $row['id'];
         $name = $row['name'];
 
@@ -48,7 +48,7 @@ class AccountTest extends YamlTestCase
 
     public function testUpdate()
     {
-        $row = $this->getFixtureRow(0);
+        $row = $this->getFixtureRow('account', 0);
         $id = $row['id'];
         $name = $row['name'];
 
@@ -67,7 +67,7 @@ class AccountTest extends YamlTestCase
 
     public function testDestroy()
     {
-        $row = $this->getFixtureRow(0);
+        $row = $this->getFixtureRow('account', 0);
         $id = $row['id'];
         $account = Account::find($id);
         $this->assertEquals(1, $this->getConnection()->getRowCount('account'));
@@ -77,7 +77,7 @@ class AccountTest extends YamlTestCase
 
     public function testAddBookmark()
     {
-        $row = $this->getFixtureRow(0);
+        $row = $this->getFixtureRow('account', 0);
         $id = $row['id'];
         $account = Account::find($id);
 
@@ -89,9 +89,14 @@ class AccountTest extends YamlTestCase
 
     public function testFindBookmarks()
     {
-        $row = $this->getFixtureRow(0);
+        $row = $this->getFixtureRow('account', 0);
         $id = $row['id'];
         $account = Account::find($id);
-        $this->assertEquals(1, count($account->findBookmarks()));
+        $bookmarks = $account->findBookmarks();
+
+        $bookmarkRow = $this->getFixtureRow('bookmark', 0);
+        $this->assertEquals(1, count($bookmarks));
+        $this->assertEquals($bookmarkRow['id'], $bookmarks[0]->getId());
+        $this->assertEquals($bookmarkRow['url'], $bookmarks[0]->getUrl());
     }
 }
